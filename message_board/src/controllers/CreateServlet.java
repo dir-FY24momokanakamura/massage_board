@@ -17,6 +17,7 @@ import utils.DBUtil;
 @WebServlet("/create")
 public class CreateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private static final Object m = null;
 
     public CreateServlet() {
         super();
@@ -28,7 +29,8 @@ public class CreateServlet extends HttpServlet {
         if (_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
             em.getTransaction().begin();
-
+            
+         
             Message m = new Message();
 
             String title = request.getParameter("title");
@@ -43,6 +45,7 @@ public class CreateServlet extends HttpServlet {
 
             em.persist(m);
             em.getTransaction().commit();
+            request.getSession().setAttribute("flush", "登録が完了しました。");       
             em.close();
 
             response.sendRedirect(request.getContextPath() + "/index");
